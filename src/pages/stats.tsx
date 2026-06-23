@@ -52,7 +52,7 @@ function LineChart({ data, color = '#e2e2e2', chartId = 'default' }: { data: Exe
     return (
       <div className="flex items-center justify-center h-full flex-col gap-1">
         <p className="text-white text-sm font-semibold">{Math.round(data[0].weight)} lb</p>
-        <p className="text-neutral-600 text-xs">{data[0].date} · only session so far</p>
+        <p className="text-white text-xs">{data[0].date} · only session so far</p>
       </div>
     );
   }
@@ -67,7 +67,7 @@ function LineChart({ data, color = '#e2e2e2', chartId = 'default' }: { data: Exe
   const rawMin = Math.min(...weights);
   const rawMax = Math.max(...weights);
 
-  // If no change, add ±5lb padding
+  // ±5lb padding up and down
   const hasChange = rawMax - rawMin > 0.5;
   const minW = hasChange ? rawMin : rawMin - 5;
   const maxW = hasChange ? rawMax : rawMax + 5;
@@ -156,7 +156,7 @@ export default function Stats() {
     });
   });
 
-  // Build pill list: pins first, then top by frequency, max 5 total
+  // max 5 total pills
   const topByFreq = Object.entries(exerciseFreq)
     .sort((a, b) => b[1] - a[1])
     .map(([id]) => id)
@@ -327,7 +327,7 @@ export default function Stats() {
             {activePill && exerciseMap.get(activePill) && (
               <div className="flex items-center justify-between mb-2 px-1">
                 <span className="text-xs font-semibold text-white">{exerciseMap.get(activePill)?.name}</span>
-                <span className="text-[10px] text-neutral-500">{chartData.length} sessions</span>
+                <span className="text-[10px] text-white">{chartData.length} sessions</span>
               </div>
             )}
             {!activePill && (
@@ -346,7 +346,7 @@ export default function Stats() {
           {statCards.map(({ label, value }) => (
             <div key={label} className="bg-neutral-900 border border-neutral-800 rounded-2xl px-5 py-4 flex flex-col gap-1">
               <span className="text-xs text-neutral-500 font-medium uppercase tracking-widest">{label}</span>
-              <span className="text-xl font-bold text-white truncate">{value}</span>
+              <span className="text-md font-bold text-white truncate">{value}</span>
             </div>
           ))}
         </div>

@@ -4,12 +4,15 @@ import { Routine } from '@/types';
 import {mockRoutines} from '@/data/standardRoutines'
 import BottomNav from '@/components/BottomNav';
 import RoutineTab from '@/components/RoutineTab';
+import { exportRoutine } from '@/utils/routineSharing';
+
 
 export default function RoutinesPage() {
   const router = useRouter();
   const [search, setSearch] = useState('');
   const [routines, setRoutines] = useState<Routine[]>([]);
   const [isMounted, setIsMounted] = useState(false);
+  
 
   useEffect(() => {
     setIsMounted(true);
@@ -81,11 +84,22 @@ export default function RoutinesPage() {
             ) : (
               (
                 filteredRoutines.map((routine) => (
+                  <div key={routine.id} className="relative group">
                   <RoutineTab
                     key={routine.id}
                     routine={routine}
                     onClick={() => router.push(`/routine/${routine.id}`)} />
+                     <button
+                    onClick={(e) => { e.stopPropagation(); exportRoutine(routine); }}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-bold text-neutral-600 
+                    hover:text-white border border-neutral-700 hover:border-neutral-500 px-2 py-1 rounded-lg 
+                    transition-colors hover:cursor-pointer opacity-0 group-hover:opacity-100"
+                  >
+                    Export
+                  </button>
+                </div>
                 )
+                
                 )
               
               )  
@@ -98,7 +112,6 @@ export default function RoutinesPage() {
 
       </main>
 
-      {/* Adjust active state marker depending on your bottom nav setup */}
       <BottomNav active="routines" />
     </div>
   );

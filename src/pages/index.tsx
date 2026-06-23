@@ -2,15 +2,20 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Routine } from '@/types';
 import { mockRoutines } from '@/data/standardRoutines';
+import { exportRoutine } from '@/utils/routineSharing';
 
 import RoutineTab from '@/components/RoutineTab';
 import BottomNav from '@/components/BottomNav';
+import ImportRoutineModal from '@/components/ImportRoutineModal';
+ 
 
 export default function Home() {
   const router = useRouter();
   const [search, setSearch] = useState('');
   const [routines, setRoutines] = useState<Routine[]>([]);
   const [isMounted, setIsMounted] = useState(false);
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [activeWorkout, setActiveWorkout] = useState<Routine | null>(null);
 
   useEffect(() => {
     if (router.query.startRoutineId) {
@@ -57,6 +62,13 @@ export default function Home() {
     r.name.toLowerCase().includes(search.toLowerCase())
   );
 
+  const reloadRoutines = () => {
+    const stored = localStorage.getItem('workout-routine-builder-routines');
+    if (stored) {
+      try { setRoutines(JSON.parse(stored)); } catch { }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-neutral-950 text-white flex flex-col">
       <main className="flex-1 px-6 pt-16 pb-32 max-w-md mx-auto w-full flex flex-col gap-8 ">
@@ -64,6 +76,12 @@ export default function Home() {
         {/* Header */}
         <div className="">
           <h1 className="font-semibold text-2xl">My Routines</h1>
+          <button
+            onClick={() => setShowImportModal(true)}
+            className="m-2 text-xs font-semibold text-neutral-400 hover:text-white border border-neutral-700 px-3 py-1.5 rounded-xl transition-colors hover:cursor-pointer"
+          >
+            Import Routine
+          </button>
         </div>
 
         {/* Search */}
@@ -90,10 +108,20 @@ export default function Home() {
               </p>
             ) : (
               filtered.map((routine) => (
+                <div key={routine.id} className="relative group">
                 <RoutineTab
                   key={routine.id}
                   routine={routine}
-                  onClick={(r) => router.push(`/routine/${r.id}`)} />
+                  onClick={() => router.push(`/routine/${routine.id}`)} />
+                   <button
+                  onClick={(e) => { e.stopPropagation(); exportRoutine(routine); }}
+                  className="absolute right-10 top-1/2 -translate-y-1/2 text-[10px] font-bold text-white/20
+                border border-neutral-700 hover:border-neutral-500 px-2 py-1 rounded-lg 
+                  transition-colors hover:cursor-pointer "
+                >
+                  Export
+                </button>
+              </div>
               )
               )
             )
@@ -111,7 +139,19 @@ export default function Home() {
 
       </main>
 
+      {showImportModal && (
+        <ImportRoutineModal
+          onClose={() => setShowImportModal(false)}
+          onImported={() => {
+            reloadRoutines();
+            setShowImportModal(false);
+          }}
+        />
+      )}
+
       <BottomNav active="home" />
+
+
     </div>
   );
 }

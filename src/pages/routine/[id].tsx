@@ -17,8 +17,12 @@ export default function WorkoutSession() {
 
   const [routine, setRoutine] = useState<Routine | null>(null);
   const [weights, setWeights] = useState<Record<string, string>>({});
+  const [reps, setReps] = useState<Record<string, string>>({});
+  const [sets, setSets] = useState<Record<string, string>>({});
+
   const [units, setUnits] = useState<Record<string, 'lb' | 'kg'>>({});
   const [globalUnit, setGlobalUnit] = useState<'lb' | 'kg'>('lb');
+  const [openLoggerIds, setOpenLoggerIds] = useState<Set<string>>(new Set());
 
   // Fetch routine from localStorage by id
   useEffect(() => {
@@ -42,22 +46,42 @@ export default function WorkoutSession() {
     setGlobalUnit((storedGlobalUnit === 'kg' ? 'kg' : 'lb') as 'lb' | 'kg');
 
     const loadedWeights: Record<string, string> = {};
+    const finishedSets: Record<string, string> = {};
+    const finishedReps: Record<string, string> = {};
+
     const loadedUnits: Record<string, 'lb' | 'kg'> = {};
 
     routine.exercises.forEach(({ exercise }) => {
       const storedWeight = localStorage.getItem(`workout-active-weight-${exercise.id}`);
+      const storedReps = localStorage.getItem(`workout-active-sets-${exercise.id}`);
+      const storedSets = localStorage.getItem(`workout-active-reps-${exercise.id}`);
       const storedUnit = localStorage.getItem(`workout-active-unit-${exercise.id}`);
+
       loadedWeights[exercise.id] = storedWeight || '';
+      finishedReps[exercise.id] = storedReps || '';
+      finishedSets[exercise.id] = storedSets || '';
       loadedUnits[exercise.id] = (storedUnit === 'kg' ? 'kg' : 'lb') as 'lb' | 'kg';
     });
 
     setWeights(loadedWeights);
+    setReps(finishedReps);
+    setSets(finishedSets);
     setUnits(loadedUnits);
   }, [routine]);
 
   const handleWeightChange = (exerciseId: string, value: string) => {
     setWeights((prev) => ({ ...prev, [exerciseId]: value }));
     localStorage.setItem(`workout-active-weight-${exerciseId}`, value);
+  };
+
+  const handleSetsChange = (exerciseId: string, value: string) => {
+    setSets((prev) => ({ ...prev, [exerciseId]: value }));
+    localStorage.setItem(`workout-active-sets-${exerciseId}`, value);
+  };
+
+  const handleRepsChange = (exerciseId: string, value: string) => {
+    setReps((prev) => ({ ...prev, [exerciseId]: value }));
+    localStorage.setItem(`workout-active-reps-${exerciseId}`, value);
   };
 
   const handleIndividualUnitChange = (exerciseId: string) => {
@@ -113,6 +137,18 @@ export default function WorkoutSession() {
         }
       }
     });
+
+    for (const { exercise } of routine.exercises) {
+      const s = sets[exercise.id];
+      const r = reps[exercise.id];
+      const hasS = s !== undefined && s !== '' && parseFloat(s) !== 0;
+      const hasR = r !== undefined && r !== '' && parseFloat(r) !== 0;
+
+      if (hasS !== hasR) {
+        alert(`Please fill in both sets and reps for "${exercise.name}", or leave both empty.`);
+        return;
+      }
+    }
 
     if (!hasInputs) {
       alert('Please enter at least one weight lifted to log your session.');
@@ -195,14 +231,18 @@ export default function WorkoutSession() {
           <span className="text-xs font-semibold text-neutral-500 uppercase tracking-widest px-1">
             Exercises
           </span>
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col gap-6">
             {routine.exercises.map(({ exercise }) => {
+              const isCurrentOpen = openLoggerIds.has(exercise.id);
               const weightVal = weights[exercise.id] || '';
+              const setsVal = sets[exercise.id] || '';
+              const repsVal = reps[exercise.id] || '';
+
               const exUnit = units[exercise.id] || 'lb';
               return (
                 <li
                   key={exercise.id}
-                  className="flex items-center justify-between bg-neutral-900 border border-neutral-800 rounded-2xl px-5 py-4 gap-4"
+                  className="flex relative items-center justify-between bg-neutral-900 border border-neutral-800 rounded-2xl px-5 py-4 gap-4"
                 >
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold text-white truncate">{exercise.name}</p>
@@ -214,7 +254,42 @@ export default function WorkoutSession() {
                         {exercise.type}
                       </span>
                     </div>
+
+                    {isCurrentOpen && (
+                      <div
+                        className="mt-9 mb-1 items-center gap-2">
+                        <p
+                        className="  text-neutral-400 text-[10px] font-bold px-2 py-0.5 rounded mb-2"
+                        >
+                          Optional </p>                       
+                         <span className=" text-xs text-light font-bold px-2.5 py-1">
+                          REPS
+                        </span>
+
+                        <input type="number"
+                          placeholder="8"
+                          value={repsVal}
+                          min="0"
+                          onChange={(e) => handleRepsChange(exercise.id, e.target.value)}
+                          className="bg-neutral-800 rounded-xl text-center text-light text-sm py-1 w-12 focus:outline-none"
+                        />
+
+                        <span className="text-xs text-light font-bold px-2.5 py-1 ">
+                          SETS
+                        </span>
+
+                        <input type="number"
+                          placeholder="3"
+                          value={setsVal}
+                          min="0"
+                          onChange={(e) => handleSetsChange(exercise.id, e.target.value)}
+                          className="bg-neutral-800  rounded-xl text-center text-light text-sm py-1 w-12 focus:outline-none"
+                        />
+
+                      </div>
+                    )}
                   </div>
+
                   <div className="flex items-center bg-neutral-800 border border-neutral-700 rounded-xl overflow-hidden px-2 py-1.5 w-35 justify-between">
                     <input
                       type="number"
@@ -231,6 +306,21 @@ export default function WorkoutSession() {
                       {exUnit}
                     </button>
                   </div>
+
+
+                  {/* Sets and reps extender */}
+                  <button
+                    className="absolute top-full left-1/2 -translate-x-1/2 -translate-y-1/2 
+                  bg-black border-light border-2 text-light font-medium px-4 py-1 rounded-xl text-xs 
+                  shadow-lg hover:bg-lime-400 hover:text-black transition-colors"
+                    onClick={() => setOpenLoggerIds((prev) => {
+                      const next = new Set(prev);
+                      next.has(exercise.id) ? next.delete(exercise.id) : next.add(exercise.id);
+                      return next;
+                    })}                  >
+
+                    {isCurrentOpen ? '−' : '+'}
+                  </button>
                 </li>
               );
             })}
@@ -240,12 +330,15 @@ export default function WorkoutSession() {
         {/* Log Session Button */}
         <button
           onClick={logWorkoutSession}
-          className="w-full bg-light text-black hover:opacity-90 active:scale-95 transition-all text-sm font-semibold rounded-2xl py-4 tracking-wide shadow-lg shadow-light/10 mt-4 hover:cursor-pointer"
+          className="w-full border border-light text-light active:scale-95 transition-all 
+          text-sm font-semibold rounded-2xl py-4 tracking-wide shadow-lg shadow-light/30 mt-4 
+          hover:cursor-pointer hover:bg-light hover:text-black"
         >
           Finish & Log Workout
         </button>
 
       </main>
+      
 
       <BottomNav active="home" />
     </div>
