@@ -7,7 +7,7 @@ import { exportRoutine } from '@/utils/routineSharing';
 import RoutineTab from '@/components/RoutineTab';
 import BottomNav from '@/components/BottomNav';
 import ImportRoutineModal from '@/components/ImportRoutineModal';
- 
+
 
 export default function Home() {
   const router = useRouter();
@@ -15,7 +15,8 @@ export default function Home() {
   const [routines, setRoutines] = useState<Routine[]>([]);
   const [isMounted, setIsMounted] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
-  const [activeWorkout, setActiveWorkout] = useState<Routine | null>(null);
+
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     if (router.query.startRoutineId) {
@@ -26,6 +27,21 @@ export default function Home() {
   // Load standard routines
   useEffect(() => {
     setIsMounted(true);
+
+    const storedName = localStorage.getItem('user-name');
+    if (storedName) {
+      setUserName(storedName);
+    } else {
+      const name = window.prompt("What is your name?")
+
+      if (name !== null && name.trim() !== '') {
+        localStorage.setItem('user-name', name)
+        setUserName(name)
+      }
+
+
+
+    }
 
     const stored = localStorage.getItem('workout-routine-builder-routines');
     let loaded: Routine[] = [];
@@ -48,7 +64,7 @@ export default function Home() {
     }
 
     setRoutines(loaded);
-  }, []);
+  }, [userName]);
 
   const sortedRoutines = [...routines].sort((a, b) => {
     const timeA = a.updatedAt || 0;
@@ -75,7 +91,7 @@ export default function Home() {
 
         {/* Header */}
         <div className="">
-          <h1 className="font-semibold text-2xl">My Routines</h1>
+          <h1 className="font-semibold text-2xl"> {userName} Routines</h1>
           <button
             onClick={() => setShowImportModal(true)}
             className="m-2 text-xs font-semibold text-neutral-400 hover:text-white border border-neutral-700 px-3 py-1.5 rounded-xl transition-colors hover:cursor-pointer"
@@ -109,19 +125,19 @@ export default function Home() {
             ) : (
               filtered.map((routine) => (
                 <div key={routine.id} className="relative group">
-                <RoutineTab
-                  key={routine.id}
-                  routine={routine}
-                  onClick={() => router.push(`/routine/${routine.id}`)} />
-                   <button
-                  onClick={(e) => { e.stopPropagation(); exportRoutine(routine); }}
-                  className="absolute right-10 top-1/2 -translate-y-1/2 text-[10px] font-bold text-white/20
+                  <RoutineTab
+                    key={routine.id}
+                    routine={routine}
+                    onClick={() => router.push(`/routine/${routine.id}`)} />
+                  <button
+                    onClick={(e) => { e.stopPropagation(); exportRoutine(routine); }}
+                    className="absolute right-10 top-1/2 -translate-y-1/2 text-[10px] font-bold text-white/20
                 border border-neutral-700 hover:border-neutral-500 px-2 py-1 rounded-lg 
                   transition-colors hover:cursor-pointer "
-                >
-                  Export
-                </button>
-              </div>
+                  >
+                    Export
+                  </button>
+                </div>
               )
               )
             )

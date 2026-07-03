@@ -360,13 +360,15 @@ export default function Stats() {
               const isFuture = i > 2;
               const logged = loggedDayStrings.has(day.toDateString());
               return (
-                <div
+                <button
                   key={i}
-                  className={`flex-1 flex flex-col items-center justify-between py-3 px-1 rounded-2xl border gap-2
+                  onClick={() => router.push('/streak')}
+                  className={`flex-1 flex flex-col items-center justify-between py-3 px-1 rounded-2xl border gap-2 hover:cursor-pointer
                     ${isToday
                       ? 'bg-neutral-800 border-neutral-700'
                       : 'bg-neutral-900 border-neutral-800'}`}
                 >
+
                   <span className="text-[10px] font-semibold text-neutral-500 uppercase">
                     {DAY_ACRONYMS[day.getDay()]}
                   </span>
@@ -381,7 +383,7 @@ export default function Stats() {
                   ) : (
                     <div className="w-2 h-2 rounded-full bg-red-500" />
                   )}
-                </div>
+                  </button>
               );
             })}
           </div>

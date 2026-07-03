@@ -91,9 +91,9 @@ export default function RoutinesPage() {
                     onClick={() => router.push(`/routine/${routine.id}`)} />
                      <button
                     onClick={(e) => { e.stopPropagation(); exportRoutine(routine); }}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-bold text-neutral-600 
-                    hover:text-white border border-neutral-700 hover:border-neutral-500 px-2 py-1 rounded-lg 
-                    transition-colors hover:cursor-pointer opacity-0 group-hover:opacity-100"
+                    className="absolute right-10 top-1/2 -translate-y-1/2 text-[10px] font-bold text-white/20
+                    border border-neutral-700 hover:border-neutral-500 px-2 py-1 rounded-lg 
+                      transition-colors hover:cursor-pointer "
                   >
                     Export
                   </button>
