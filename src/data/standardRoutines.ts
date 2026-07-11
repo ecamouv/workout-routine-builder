@@ -11,8 +11,7 @@ export const mockRoutines: Routine[] = [
           "id": "bench-press",
           "name": "Barbell Bench Press",
           "muscles": ["chest", "triceps", "front-deltoids"],
-          "type": "compound",
-          "intensity": "intermediate"
+          "type": "compound"
         }
       },
       {
@@ -21,8 +20,7 @@ export const mockRoutines: Routine[] = [
           "id": "overhead-press",
           "name": "Overhead Barbell Press",
           "muscles": ["front-deltoids", "triceps"],
-          "type": "compound",
-          "intensity": "intermediate"
+          "type": "compound"
         }
       },
       {
@@ -31,8 +29,7 @@ export const mockRoutines: Routine[] = [
           "id": "chest-fly",
           "name": "Cable Chest Fly",
           "muscles": ["chest"],
-          "type": "isolation",
-          "intensity": "beginner"
+          "type": "isolation"
         }
       },
       {
@@ -41,8 +38,7 @@ export const mockRoutines: Routine[] = [
           "id": "lateral-raise",
           "name": "Dumbbell Lateral Raise",
           "muscles": ["front-deltoids"],
-          "type": "isolation",
-          "intensity": "beginner"
+          "type": "isolation"
         }
       },
       {
@@ -51,8 +47,7 @@ export const mockRoutines: Routine[] = [
           "id": "tricep-pushdown",
           "name": "Cable Tricep Pushdown",
           "muscles": ["triceps"],
-          "type": "isolation",
-          "intensity": "beginner"
+          "type": "isolation"
         }
       }
     ]
@@ -67,8 +62,7 @@ export const mockRoutines: Routine[] = [
           "id": "pull-up",
           "name": "Pull-Up",
           "muscles": ["upper-back", "trapezius", "biceps"],
-          "type": "compound",
-          "intensity": "intermediate"
+          "type": "compound"
         }
       },
       {
@@ -77,8 +71,7 @@ export const mockRoutines: Routine[] = [
           "id": "barbell-row",
           "name": "Barbell Row",
           "muscles": ["upper-back", "trapezius", "biceps", "lower-back"],
-          "type": "compound",
-          "intensity": "intermediate"
+          "type": "compound"
         }
       },
       {
@@ -87,8 +80,7 @@ export const mockRoutines: Routine[] = [
           "id": "lat-pulldown",
           "name": "Lat Pulldown",
           "muscles": ["upper-back", "trapezius", "back-deltoids", "biceps", "forearm", "triceps"],
-          "type": "compound",
-          "intensity": "beginner"
+          "type": "compound"
         }
       },
       {
@@ -97,8 +89,7 @@ export const mockRoutines: Routine[] = [
           "id": "barbell-curl",
           "name": "Barbell Bicep Curl",
           "muscles": ["biceps"],
-          "type": "isolation",
-          "intensity": "beginner"
+          "type": "isolation"
         }
       },
       {
@@ -107,8 +98,7 @@ export const mockRoutines: Routine[] = [
           "id": "face-pull",
           "name": "Cable Face Pull",
           "muscles": ["trapezius", "back-deltoids"],
-          "type": "isolation",
-          "intensity": "beginner"
+          "type": "isolation"
         }
       }
     ]
@@ -123,8 +113,7 @@ export const mockRoutines: Routine[] = [
           "id": "back-squat",
           "name": "Barbell Back Squat",
           "muscles": ["quadriceps", "gluteal", "hamstring"],
-          "type": "compound",
-          "intensity": "intermediate"
+          "type": "compound"
         }
       },
       {
@@ -133,8 +122,7 @@ export const mockRoutines: Routine[] = [
           "id": "leg-extension",
           "name": "Leg Extension Machine",
           "muscles": ["quadriceps"],
-          "type": "isolation",
-          "intensity": "beginner"
+          "type": "isolation"
         }
       },
       {
@@ -143,8 +131,7 @@ export const mockRoutines: Routine[] = [
           "id": "lying-leg-curl",
           "name": "Lying Leg Curl Machine",
           "muscles": ["hamstring"],
-          "type": "isolation",
-          "intensity": "beginner"
+          "type": "isolation"
         }
       },
       {
@@ -153,8 +140,7 @@ export const mockRoutines: Routine[] = [
           "id": "standing-calf-raise",
           "name": "Standing Calf Raise",
           "muscles": ["calves"],
-          "type": "isolation",
-          "intensity": "beginner"
+          "type": "isolation"
         }
       },
       {
@@ -163,8 +149,7 @@ export const mockRoutines: Routine[] = [
           "id": "romanian-deadlift",
           "name": "Romanian Deadlift (RDL)",
           "muscles": ["hamstring", "gluteal", "lower-back"],
-          "type": "compound",
-          "intensity": "intermediate"
+          "type": "compound"
         }
       }
     ]
@@ -179,8 +164,7 @@ export const mockRoutines: Routine[] = [
           "id": "shoulder-press",
           "name": "Shoulders Press",
           "muscles": ["front-deltoids", "triceps", "trapezius", "chest"],
-          "type": "compound",
-          "intensity": "intermediate"
+          "type": "compound"
         }
       },
       {
@@ -189,8 +173,7 @@ export const mockRoutines: Routine[] = [
           "id": "cable-lateral-raise",
           "name": "Cable Lateral Raise",
           "muscles": ["front-deltoids", "back-deltoids", "trapezius"],
-          "type": "isolation",
-          "intensity": "beginner"
+          "type": "isolation"
         }
       },
       {
@@ -199,8 +182,7 @@ export const mockRoutines: Routine[] = [
           "id": "reverse-fly",
           "name": "Rear Delt Reverse Fly",
           "muscles": ["back-deltoids", "trapezius"],
-          "type": "isolation",
-          "intensity": "beginner"
+          "type": "isolation"
         }
       },
       {
@@ -209,8 +191,7 @@ export const mockRoutines: Routine[] = [
           "id": "cable-tricep-extension",
           "name": "Cable Tricep Extension",
           "muscles": ["triceps"],
-          "type": "isolation",
-          "intensity": "beginner"
+          "type": "isolation"
         }
       },
       {
@@ -219,8 +200,7 @@ export const mockRoutines: Routine[] = [
           "id": "reverse-curl",
           "name": "Barbell Reverse Curl",
           "muscles": ["forearm", "biceps"],
-          "type": "isolation",
-          "intensity": "beginner"
+          "type": "isolation"
         }
       },
       {
@@ -229,8 +209,7 @@ export const mockRoutines: Routine[] = [
           "id": "tricep-pulldown",
           "name": "Tricep Pulldown",
           "muscles": ["triceps"],
-          "type": "isolation",
-          "intensity": "beginner"
+          "type": "isolation"
         }
       }
     ]

@@ -247,9 +247,6 @@ export default function WorkoutSession() {
                     <p className="text-sm font-semibold text-white truncate">{exercise.name}</p>
                     <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
                       <span className="inline-block bg-neutral-800 text-neutral-400 text-[10px] font-bold px-2 py-0.5 rounded capitalize">
-                        {exercise.intensity}
-                      </span>
-                      <span className="inline-block bg-neutral-800 text-neutral-400 text-[10px] font-bold px-2 py-0.5 rounded capitalize">
                         {exercise.type}
                       </span>
                     </div>
