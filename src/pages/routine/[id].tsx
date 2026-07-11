@@ -208,7 +208,6 @@ export default function WorkoutSession() {
         <div className="flex justify-between items-center bg-neutral-900 border border-neutral-800 rounded-2xl px-5 py-4">
           <div className="flex flex-col gap-0.5">
             <span className="text-sm font-semibold text-white">Switch weight unit</span>
-            <span className="text-xs text-neutral-500">Inputs auto-save immediately</span>
           </div>
           <div className="flex bg-neutral-805 p-1 rounded-xl border border-neutral-700">
             <button
@@ -258,11 +257,8 @@ export default function WorkoutSession() {
                     {isCurrentOpen && (
                       <div
                         className="mt-9 mb-1 items-center gap-2">
-                        <p
-                        className="  text-neutral-400 text-[10px] font-bold px-2 py-0.5 rounded mb-2"
-                        >
-                          Optional </p>                       
-                         <span className=" text-xs text-light font-bold px-2.5 py-1">
+
+                        <span className=" text-xs text-light font-bold px-2.5 py-1">
                           REPS
                         </span>
 
@@ -271,10 +267,10 @@ export default function WorkoutSession() {
                           value={repsVal}
                           min="0"
                           onChange={(e) => handleRepsChange(exercise.id, e.target.value)}
-                          className="bg-neutral-800 rounded-xl text-center text-light text-sm py-1 w-12 focus:outline-none"
+                          className="mb-1 bg-neutral-800 font-[16px] rounded-xl text-center text-light text-sm py-1 w-12 focus:outline-none"
                         />
-
-                        <span className="text-xs text-light font-bold px-2.5 py-1 ">
+                        <br />
+                        <span className="text-xs text-light font-bold px-2.5 py-1">
                           SETS
                         </span>
 
@@ -283,21 +279,21 @@ export default function WorkoutSession() {
                           value={setsVal}
                           min="0"
                           onChange={(e) => handleSetsChange(exercise.id, e.target.value)}
-                          className="bg-neutral-800  rounded-xl text-center text-light text-sm py-1 w-12 focus:outline-none"
+                          className="mb-1 bg-neutral-800 font-[16px] rounded-xl text-center text-light text-sm py-1 w-12 focus:outline-none"
                         />
 
                       </div>
                     )}
                   </div>
 
-                  <div className="flex items-center bg-neutral-800 border border-neutral-700 rounded-xl overflow-hidden px-2 py-1.5 w-35 justify-between">
+                  <div className="flex items-center bg-neutral-800 border border-neutral-700 rounded-xl overflow-hidden px-2.5 py-1.5 w-35 justify-between">
                     <input
                       type="number"
                       min="0"
                       placeholder="0"
                       value={weightVal}
                       onChange={(e) => handleWeightChange(exercise.id, e.target.value)}
-                      className="bg-transparent w-full text-right focus:outline-none text-white text-sm font-medium pr-1.5"
+                      className="bg-transparent w-full text-right focus:outline-none text-white text-sm font-[16px] pr-1.5"
                     />
                     <button
                       onClick={() => handleIndividualUnitChange(exercise.id)}
@@ -334,11 +330,11 @@ export default function WorkoutSession() {
           text-sm font-semibold rounded-2xl py-4 tracking-wide shadow-lg shadow-light/30 mt-4 
           hover:cursor-pointer hover:bg-light hover:text-black"
         >
-          Finish & Log Workout
+          Log Workout
         </button>
 
       </main>
-      
+
 
       <BottomNav active="home" />
     </div>

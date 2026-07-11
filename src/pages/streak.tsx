@@ -85,9 +85,8 @@ function DayCell({ date, isToday, isFuture, isCurrentMonth, logged, onClick }: D
       <span className={`text-xs font-bold leading-none ${isToday ? 'text-white' : 'text-neutral-400'}`}>
         {date.getDate()}
       </span>
-      <div className={`w-1.5 h-1.5 rounded-full ${
-        isFuture ? 'border border-neutral-700' : logged ? 'bg-light' : 'bg-red-500'
-      }`} />
+      <div className={`w-1.5 h-1.5 rounded-full ${isFuture ? 'border border-neutral-700' : logged ? 'bg-light' : 'bg-red-500'
+        }`} />
     </button>
   );
 }
@@ -133,8 +132,8 @@ function RoutinePicker({ date, routines, onSelect, onClose }: RoutinePickerProps
             {filtered.length === 0
               ? <p className="text-sm text-neutral-600 px-5 py-5 text-center">No routines found.</p>
               : filtered.map(routine => (
-                  <RoutineTab key={routine.id} routine={routine} onClick={onSelect} compact />
-                ))
+                <RoutineTab key={routine.id} routine={routine} onClick={onSelect} compact />
+              ))
             }
           </div>
         </div>
@@ -300,9 +299,8 @@ function WorkoutLogger({ date, routine, existingTimestamp, onLogged, onBack }: W
         <div className="flex bg-neutral-950 p-1 rounded-xl border border-neutral-700">
           {(['lb', 'kg'] as const).map(u => (
             <button key={u} onClick={() => handleGlobalUnitChange(u)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all hover:cursor-pointer uppercase ${
-                globalUnit === u ? 'bg-light text-black shadow' : 'text-neutral-400 hover:text-white'
-              }`}>{u}</button>
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all hover:cursor-pointer uppercase ${globalUnit === u ? 'bg-light text-black shadow' : 'text-neutral-400 hover:text-white'
+                }`}>{u}</button>
           ))}
         </div>
       </div>
@@ -318,7 +316,6 @@ function WorkoutLogger({ date, routine, existingTimestamp, onLogged, onBack }: W
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-white truncate">{exercise.name}</p>
                   <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
-                    <span className="inline-block bg-neutral-800 text-neutral-400 text-[10px] font-bold px-2 py-0.5 rounded capitalize">{exercise.intensity}</span>
                     <span className="inline-block bg-neutral-800 text-neutral-400 text-[10px] font-bold px-2 py-0.5 rounded capitalize">{exercise.type}</span>
                   </div>
                 </div>

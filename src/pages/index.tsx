@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Routine } from '@/types';
+import { Routine, RoutineAssignment } from '@/types';
 import { mockRoutines } from '@/data/standardRoutines';
 import { exportRoutine } from '@/utils/routineSharing';
 
@@ -8,11 +8,11 @@ import RoutineTab from '@/components/RoutineTab';
 import BottomNav from '@/components/BottomNav';
 import ImportRoutineModal from '@/components/ImportRoutineModal';
 
-
 export default function Home() {
   const router = useRouter();
   const [search, setSearch] = useState('');
   const [routines, setRoutines] = useState<Routine[]>([]);
+  const [assignments, setAssignments] = useState<RoutineAssignment[]>([]);
   const [isMounted, setIsMounted] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
 
@@ -38,9 +38,6 @@ export default function Home() {
         localStorage.setItem('user-name', name)
         setUserName(name)
       }
-
-
-
     }
 
     const stored = localStorage.getItem('workout-routine-builder-routines');
@@ -63,8 +60,20 @@ export default function Home() {
       }
     }
 
+    const storedAssignments = localStorage.getItem('workout-routine-assignments');
+    if (storedAssignments) {
+      try { setAssignments(JSON.parse(storedAssignments)); } catch (e) { console.error(e); }
+    }
+
     setRoutines(loaded);
   }, [userName]);
+
+  const DAY_KEYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  const today = DAY_KEYS[new Date().getDay()];
+  const todaysAssignments = assignments.filter((a) => a.day === today);
+  const todaysRoutines = todaysAssignments
+    .map((a) => routines.find((r) => r.id === a.routineId))
+    .filter((r): r is Routine => Boolean(r));
 
   const sortedRoutines = [...routines].sort((a, b) => {
     const timeA = a.updatedAt || 0;
@@ -110,6 +119,32 @@ export default function Home() {
             placeholder="Search routines..."
             className="w-full bg-neutral-900 border border-neutral-800 rounded-2xl pl-9 pr-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-light transition-colors"
           />
+        </div>
+
+
+        {/* Today´s Routine */}
+        <div className="flex flex-col gap-2">
+          <p className="text-xs font-medium text-neutral-500 uppercase tracking-widest px-1">
+            {todaysRoutines.length > 1 ? "Today´s Routines" : "Today´s Routine"}
+          </p>
+          <div className="rounded-2xl overflow-hidden border border-neutral-800 divide-y divide-neutral-800">
+            <div className="flex flex-col gap-2">
+              {isMounted && todaysRoutines.length > 0 ? (
+                todaysRoutines.map((routine) => (
+                  <RoutineTab
+                    key={routine.id}
+                    routine={routine}
+                    onClick={() => router.push(`/routine/${routine.id}`)}
+                    highlight
+                  />
+                ))
+              ) : (
+                <p className="pl-9 pr-4 font-semibold py-3 text-sm text-neutral-600">
+                  No routine scheduled for today.
+                </p>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Routine list */}

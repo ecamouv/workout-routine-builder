@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Routine } from '@/types';
-import {mockRoutines} from '@/data/standardRoutines'
+import { mockRoutines } from '@/data/standardRoutines'
 import BottomNav from '@/components/BottomNav';
 import RoutineTab from '@/components/RoutineTab';
 import { exportRoutine } from '@/utils/routineSharing';
@@ -12,24 +12,24 @@ export default function RoutinesPage() {
   const [search, setSearch] = useState('');
   const [routines, setRoutines] = useState<Routine[]>([]);
   const [isMounted, setIsMounted] = useState(false);
-  
+
 
   useEffect(() => {
     setIsMounted(true);
     const stored = localStorage.getItem('workout-routine-builder-routines');
     let loaded: Routine[] = [];
-    
+
     if (stored) {
       try {
-         loaded = JSON.parse(stored);
+        loaded = JSON.parse(stored);
       } catch (e) {
         console.error('Error parsing routines from localStorage', e);
       }
-    } 
+    }
 
     const formattedMocks = mockRoutines.map((r, i) => ({
       ...r,
-      updatedAt: r.updatedAt || (Date.now() - i * 1000), 
+      updatedAt: r.updatedAt || (Date.now() - i * 1000),
     }));
 
     const uniqueMocks = formattedMocks.filter(
@@ -85,30 +85,30 @@ export default function RoutinesPage() {
               (
                 filteredRoutines.map((routine) => (
                   <div key={routine.id} className="relative group">
-                  <RoutineTab
-                    key={routine.id}
-                    routine={routine}
-                    onClick={() => router.push(`/routine/${routine.id}`)} />
-                     <button
-                    onClick={(e) => { e.stopPropagation(); exportRoutine(routine); }}
-                    className="absolute right-10 top-1/2 -translate-y-1/2 text-[10px] font-bold text-white/20
+                    <RoutineTab
+                      key={routine.id}
+                      routine={routine}
+                      onClick={() => router.push(`/routine/${routine.id}`)} />
+                    <button
+                      onClick={(e) => { e.stopPropagation(); exportRoutine(routine); }}
+                      className="absolute right-10 top-1/2 -translate-y-1/2 text-[10px] font-bold text-white/20
                     border border-neutral-700 hover:border-neutral-500 px-2 py-1 rounded-lg 
                       transition-colors hover:cursor-pointer "
-                  >
-                    Export
-                  </button>
-                </div>
+                    >
+                      Export
+                    </button>
+                  </div>
                 )
-                
+
                 )
-              
-              )  
+
+              )
             )
-                    }             
+            }
           </div>
         </div>
 
-        
+
 
       </main>
 

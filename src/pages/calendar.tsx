@@ -51,7 +51,7 @@ export default function Calendar() {
     }
   }, []);
 
-  // Persist assignments whenever they change (post-mount)
+  // Persist assignments whenever they change 
   useEffect(() => {
     if (!isMounted) return;
     localStorage.setItem(ASSIGNMENTS_KEY, JSON.stringify(assignments));
@@ -104,12 +104,12 @@ export default function Calendar() {
     <div className="min-h-screen bg-neutral-950 text-white font-sans antialiased">
       {/* Set a max width on main so it stays centered and readable on all screens */}
       <main className="max-w-md mx-auto px-4 pt-12 pb-32 flex flex-col gap-6">
-  
+
         {/* Header */}
         <div>
           <h1 className="font-bold text-2xl tracking-tight">Weekly Schedule</h1>
         </div>
-  
+
         {/* Week list */}
         <div className="flex flex-col gap-6">
           {DAYS.map(({ key, label }) => {
@@ -119,7 +119,7 @@ export default function Calendar() {
                 <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-widest">
                   {label}
                 </span>
-  
+
                 <div className="flex flex-col gap-2 w-full">
                   {dayAssignments.map(({ assignment, routine }) => (
                     <div
@@ -142,7 +142,7 @@ export default function Calendar() {
                       </button>
                     </div>
                   ))}
-  
+
                   <button
                     onClick={() => openPicker(key)}
                     className="w-full py-2.5 bg-neutral-900/30 border border-dashed border-neutral-800 rounded-xl flex items-center justify-center text-neutral-500 hover:text-neutral-300 hover:border-neutral-700 transition-all hover:cursor-pointer text-sm gap-1"
@@ -155,16 +155,16 @@ export default function Calendar() {
             );
           })}
         </div>
-  
+
         {/* Empty state hint */}
         {isMounted && routines.length === 0 && (
           <p className="text-sm text-neutral-500 text-center py-4 bg-neutral-900/20 rounded-xl border border-neutral-900">
             No routines yet — create one first, then assign it to a day.
           </p>
         )}
-  
+
       </main>
-  
+
       {/* Routine picker overlay */}
       {pickerDay && (
         <div className="fixed inset-0 z-50 items-end justify-center">
@@ -173,7 +173,7 @@ export default function Calendar() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={closePicker}
           />
-  
+
           {/* Sheet */}
           <div className="relative bg-neutral-950 border-t border-neutral-800 rounded-t-3xl px-6 pt-6 pb-10 max-w-md mx-auto w-full flex flex-col gap-5 max-h-[80vh] shadow-2xl">
             <div className="flex items-center justify-between">
@@ -187,7 +187,7 @@ export default function Calendar() {
                 ✕
               </button>
             </div>
-  
+
             {/* Search */}
             <div className="relative">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500 text-lg">⌕</span>
@@ -200,7 +200,7 @@ export default function Calendar() {
                 className="w-full bg-neutral-900 border border-neutral-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-700 transition-colors"
               />
             </div>
-  
+
             {/* Results */}
             <div className="rounded-xl overflow-hidden border border-neutral-800 divide-y divide-neutral-900 overflow-y-auto bg-neutral-900/20">
               {filteredOptions.length === 0 ? (
@@ -216,12 +216,12 @@ export default function Calendar() {
                     compact
                   />
                 ))
-                )}
+              )}
             </div>
           </div>
         </div>
       )}
-  
+
       <BottomNav active="calendar" />
     </div>
   );

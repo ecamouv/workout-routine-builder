@@ -25,18 +25,11 @@ export type ExerciseType =
   | 'cardio'
   | 'stretching';
 
-
-export type Intensity =
-  | 'beginner'
-  | 'intermediate'
-  | 'advanced';
-
 export interface Exercise {
   id: string;
   name: string;
   muscles: MuscleGroup[];
   type: ExerciseType;
-  intensity: Intensity;
   isCustom?: boolean;
 }
 
@@ -53,7 +46,7 @@ export interface Routine {
 }
 
 export interface RoutineAssignment {
-  id: string;            
-  routineId: string;    
+  id: string;
+  routineId: string;
   day: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday";
 }
