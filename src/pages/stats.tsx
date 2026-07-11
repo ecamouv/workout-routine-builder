@@ -39,6 +39,17 @@ const formatDate = (ts: number) =>
 
 const DAY_ACRONYMS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+function handleClearData() {
+  const confirmed = window.prompt(
+    'This will permanently delete all your routines, exercises, and schedule. \nThis cannot be undone. \nType DELETE to continue.'
+  );
+  if (confirmed != "DELETE") return;
+
+  localStorage.clear();
+  window.location.reload();
+}
+
+
 function LineChart({ data, color = '#e2e2e2', chartId = 'default' }: { data: ExerciseDataPoint[]; color?: string; chartId?: string }) {
   if (data.length === 0) {
     return (
@@ -186,17 +197,17 @@ export default function Stats() {
   // Search
   const searchExercise = searchQuery.length > 1
     ? (exercises as Exercise[]).find(e =>
-        e.name.toLowerCase().includes(searchQuery.toLowerCase()))
+      e.name.toLowerCase().includes(searchQuery.toLowerCase()))
     : null;
 
   const searchChartData: ExerciseDataPoint[] = searchExercise
     ? history
-        .filter(s => s.logs[searchExercise.id])
-        .map((s, i) => ({
-          session: i + 1,
-          date: formatDate(s.timestamp),
-          weight: toLb(s.logs[searchExercise.id].weight, s.logs[searchExercise.id].unit),
-        }))
+      .filter(s => s.logs[searchExercise.id])
+      .map((s, i) => ({
+        session: i + 1,
+        date: formatDate(s.timestamp),
+        weight: toLb(s.logs[searchExercise.id].weight, s.logs[searchExercise.id].unit),
+      }))
     : [];
 
   // At a glance
@@ -280,13 +291,12 @@ export default function Stats() {
                   <button
                     key={id}
                     onClick={() => setActivePill(id)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all hover:cursor-pointer border ${
-                      isActive
-                        ? 'bg-light text-black border-light'
-                        : isPinned
-                          ? 'bg-light/10 text-neutral-300 border-light/20 hover:text-white'
-                          : 'bg-neutral-900 text-neutral-400 border-neutral-800 hover:text-white'
-                    }`}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all hover:cursor-pointer border ${isActive
+                      ? 'bg-light text-black border-light'
+                      : isPinned
+                        ? 'bg-light/10 text-neutral-300 border-light/20 hover:text-white'
+                        : 'bg-neutral-900 text-neutral-400 border-neutral-800 hover:text-white'
+                      }`}
                   >
                     {isPinned && <span className="text-[10px]">📌</span>}
                     {ex.name}
@@ -383,7 +393,7 @@ export default function Stats() {
                   ) : (
                     <div className="w-2 h-2 rounded-full bg-red-500" />
                   )}
-                  </button>
+                </button>
               );
             })}
           </div>
@@ -439,6 +449,13 @@ export default function Stats() {
             : 'Start logging workouts to see your lifetime volume milestone here.'}
         </p>
 
+        <button
+          onClick={handleClearData}
+          className="text-sm px-4 py-2 border border-red-600 border-2 text-neutral-500 font-semibold 
+          rounded-md hover:bg-red-700 transition-colors hover:cursor-pointer"
+        >
+          Delete all data
+        </button>
       </main>
 
       <BottomNav active="stats" />
