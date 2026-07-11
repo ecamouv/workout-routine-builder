@@ -456,6 +456,31 @@ export default function Stats() {
         >
           Delete all data
         </button>
+
+        <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-5 text-neutral-300 max-w-sm shadow-xl">
+          <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+            Install App on iOS
+          </h3>
+
+          <ol className="space-y-3 text-sm text-neutral-400">
+            <li className="flex items-start gap-3">
+              <span className="flex items-center justify-center bg-neutral-800 text-white font-medium text-xs rounded-full h-5 w-5 shrink-0 mt-0.5">1</span>
+              <span>Tap the <b className="text-white bg-neutral-800 px-1.5 py-0.5 rounded text-xs">···</b> icon below.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="flex items-center justify-center bg-neutral-800 text-white font-medium text-xs rounded-full h-5 w-5 shrink-0 mt-0.5">2</span>
+              <span>Select <b className="text-white">Share</b> from the menu.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="flex items-center justify-center bg-neutral-800 text-white font-medium text-xs rounded-full h-5 w-5 shrink-0 mt-0.5">3</span>
+              <span>Scroll down and tap <b className="text-white">Add to Home Screen</b>.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="flex items-center justify-center bg-neutral-800 text-white font-medium text-xs rounded-full h-5 w-5 shrink-0 mt-0.5">4</span>
+              <span>Ensure <b className="text-white">Open as Web App</b> is enabled.</span>
+            </li>
+          </ol>
+        </div>
       </main>
 
       <BottomNav active="stats" />
